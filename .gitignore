@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual envs
+.venv/
+venv/
+env/
+ENV/
+
+# IDE/editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Test / coverage
+coverage/
+*.lcov
+.nyc_output/
+htmlcov/
+.coverage
+.tox/
+
+# Build artefacts
+.next/
+.nuxt/
+out/
+*.tsbuildinfo
+
+# Docker
+*.pid
+
+# Bundle
+vendor/
