@@ -53,3 +53,9 @@ out/
 
 # Bundle
 vendor/
+
+# Go
+*.exe
+*.test
+*.out
+/backend/taskflow-backend
