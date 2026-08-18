@@ -109,3 +109,13 @@ The application can be deployed as Docker containers or directly to a cloud prov
 ## License
 
 This project is licensed under the MIT License.
+
+## Status (checkup 2026-08-18)
+> Revisado na campanha de repo-checkup. Relatorio completo: `~/repo-checkup/reports/taskflow.md` (local do mantenedor, nao no repo).
+- **Build/Install**: Backend Go — `go build ./...` RC=0; `go vet ./...` RC=0; `go.mod`/`go.sum` consistentes (`go mod tidy` sem mudancas). Frontend — `npm ci` + `npm run build` verdes (lockfile adicionado no checkup anterior).
+- **Smoke test**: `go test ./...` -> 4 testes passando, incluindo `TestHealthCheck` (GET `/api/v1/health` -> 200 via httptest) e `TestBoardsListEndpoint` (GET `/api/v1/boards` -> 200); o handler de health/boards nao toca o DB.
+- **Para rodar de ponta-a-ponta precisa de**: PostgreSQL alcancavel em `DATABASE_URL` (backend usa `lib/pq`/`sql.DB`; `initDB()` conecta de verdade ao rodar o server real). O smoke via httptest nao precisa. `docker-compose.yml` define mongodb+neo4j mas NAO bate com o codigo (usa Postgres).
+- **Inconsistencias conhecidas (README vs codigo)**: README diz "Database: MongoDB" + "Auth: JWT", mas o backend usa PostgreSQL (`lib/pq`) e NAO tem JWT; README diz "Frontend: Vue 3 + Vuetify + Pinia", mas o frontend usa `vuex` (nao `pinia`) e Vuetify nao e importado em `src/main.js`/`App.vue`; README (install) diz `cd taskflow-agile-team-productivity-suite` (nome de dir incorreto; repo e `taskflow`); README referencia `.env.example` que NAO existe; `docker-compose.yml` (mongodb+neo4j) nao bate com o backend (Postgres).
+- **Seguranca**: secret scan nenhum segredo real; `docker-compose.yml` tem credencial padrao fraca `NEO4J_AUTH=neo4j/secret` (nao e segredo real exposto; recomenda mover para `.env`). 12 vulns npm no toolchain do Vue CLI 5 — NAO corrigidas porque exigiria migracao para Vite ou `npm audit fix --force` (breaking); decisao humana.
+- **Estado resumido**: build verde (Go + frontend) + smoke (health/boards 200 via httptest, sem DB); runtime real precisa de PostgreSQL; contradicoes de docs (Postgres vs Mongo, Vuex vs Pinia, JWT, nome do dir, `.env.example`) e 12 vulns npm de toolchain nao remediadas (decisao humana).
+
