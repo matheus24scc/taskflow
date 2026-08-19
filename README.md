@@ -33,7 +33,7 @@ A self-hostable project management tool combining Kanban boards, sprint planning
 1. Clone the repository
    ```bash
    git clone <repository-url>
-   cd taskflow-agile-team-productivity-suite
+   cd taskflow
    ```
 
 2. Install backend dependencies
